@@ -390,7 +390,9 @@ header {
     background-color: #2a89f7; }
 
 .find-label {
-  background: #303030;
+  background: white;
+  color: black;
+  padding: auto 0;
   letter-spacing: 2px; }
   .find-label:hover {
     background: #303030; }
