@@ -395,7 +395,7 @@ header {
   padding: auto 0;
   letter-spacing: 2px; }
   .find-label:hover {
-    background: #303030; }
+    background: white; }
 
 .map {
   display: none;
