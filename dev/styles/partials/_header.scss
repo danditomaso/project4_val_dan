@@ -33,7 +33,7 @@ header {
   &-top {
     display: flex;
     margin: 0 auto;
-    width: 100%;
+    width: 80%;
     margin-bottom: 30px;
 
     input::placeholder {
@@ -92,5 +92,13 @@ header {
   transition: background-color 0.1s;
   &:hover {
     background-color: $accent;
+  }
+}
+
+.find-label {
+  background: darken($grey, 50);
+  letter-spacing: 2px;
+  &:hover {
+    background: darken($grey, 50);
   }
 }

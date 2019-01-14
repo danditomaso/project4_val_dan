@@ -330,7 +330,7 @@ header {
     display: -ms-flexbox;
     display: flex;
     margin: 0 auto;
-    width: 100%;
+    width: 80%;
     margin-bottom: 30px; }
     .search-bar-top input::-webkit-input-placeholder {
       font-size: 1.5rem; }
@@ -389,6 +389,12 @@ header {
   .btn:hover {
     background-color: #2a89f7; }
 
+.find-label {
+  background: #303030;
+  letter-spacing: 2px; }
+  .find-label:hover {
+    background: #303030; }
+
 .map {
   display: none;
   width: 100%;
@@ -443,40 +449,6 @@ header {
 .fa-heart {
   color: #2a89f7;
   font-size: 2rem; }
-
-button.showfavoriates {
-  font-family: Roboto, sans-serif;
-  display: inline-block;
-  cursor: pointer;
-  width: 175px;
-  position: absolute;
-  top: 2%;
-  right: 3%;
-  background-color: #221f1f;
-  -webkit-transition: background-color 0.1s;
-  -o-transition: background-color 0.1s;
-  transition: background-color 0.1s; }
-  button.showfavoriates:hover {
-    background-color: #096fe5; }
-
-.favDialog {
-  position: absolute;
-  background: #131212;
-  height: 250px;
-  width: 100%;
-  z-index: 10; }
-
-.showFavDialog {
-  height: 250px;
-  top: 0; }
-
-.showFavDialog + .wrapper {
-  position: absolute;
-  top: 250px; }
-
-.hideFavDialog {
-  top: -500px;
-  position: absolute; }
 
 .user-results {
   background-color: #e9e9e9; }

@@ -10,11 +10,11 @@ app.reset = () => {
   maps.locations = [];
 };
 
-app.generateMapTiles = normalizedData => {
+app.generateMapTiles = (normalizedData) => {
   $("#map-tiles").html("");
   $("#main-tiles").html("");
 
-  normalizedData.forEach(element => {
+  normalizedData.forEach((element) => {
     $("#main-tiles").append(`<div class="user-results-tile">
     <div class="upper-tile">
       <img src="${
@@ -90,7 +90,6 @@ app.slider = () => {
 //     $(".favDialog").toggleClass("showFavDialog hideFavDialog");
 //     for (let i = 0; i < localStorage.length; i++) {
 //       let item = app.getFavorite();
-//       console.log(item);
 //     }
 //   });
 // };
@@ -124,7 +123,7 @@ zomatoAPI.location = "";
 zomatoAPI.priceArr = ["", "$", "$$", "$$$", "$$$"];
 
 //Method to change number of results to display
-zomatoAPI.changeNumberOfResults = newNumber => {
+zomatoAPI.changeNumberOfResults = (newNumber) => {
   zomatoAPI.numberOfResults = newNumber;
 };
 
@@ -151,8 +150,8 @@ zomatoAPI.init = () => {
 // Method to set search radius in Meters - Moved to zomatoAPI.eventListeners
 zomatoAPI.setRadius = (walkSpeed, breakTime) => {
   // Calculate this based on total break time multiply by walking speed.
-  zomatoAPI.radius = (walkSpeed*1000/60 * breakTime / 2) - (walkSpeed*1000/60 * 5);
-  // console.log(zomatoAPI.radius);
+  zomatoAPI.radius =
+    (((walkSpeed * 1000) / 60) * breakTime) / 2 - ((walkSpeed * 1000) / 60) * 5;
 };
 
 //GET results from Zomato API
@@ -173,7 +172,7 @@ zomatoAPI.getResults = () => {
     headers: {
       "user-key": zomatoAPI.key
     }
-  }).then(res => {
+  }).then((res) => {
     zomatoAPI.results = res.restaurants;
   });
 
@@ -207,8 +206,8 @@ zomatoAPI.normalizeResults = () => {
   let flatArr = zomatoAPI.results;
   let normalizedArr = [];
   flatArr = flatArr
-    .map(item => item.restaurant)
-    .forEach(item =>
+    .map((item) => item.restaurant)
+    .forEach((item) =>
       normalizedArr.push([
         item.name,
         item.location.latitude,
@@ -232,7 +231,6 @@ zomatoAPI.eventListeners = () => {
     const breakTime =
       app.sliderValue === undefined ? 15 : app.sliderValue.value;
     const walkSpeed = $("input:checked").val();
-    // console.log(breakTime, walkSpeed);
     zomatoAPI.setRadius(breakTime, walkSpeed);
     // Call our API and get results based on input provided by user
     zomatoAPI.getResults();
@@ -249,11 +247,46 @@ maps.startLocation = {
   lng: -79.4000474
 };
 
+maps.distanceAPIurl =
+  "https://maps.googleapis.com/maps/api/distancematrix/json";
+
 // Get data from Zomato API and push into locations array
-maps.receiveMarkerData = array => {
+maps.receiveMarkerData = (array) => {
   maps.locations.push(...array);
   maps.displayMap();
+  // maps.getWalkingDistance();
 };
+
+// maps.createWalkingReqs = () => {
+//   return maps.locations.map((item) => {
+//     return $.ajax({
+//       url: "http://proxy.hackeryou.com",
+//       dataType: "json",
+//       method: "GET",
+//       data: {
+//         reqUrl: `${maps.distanceAPIurl}`,
+//         params: {
+//           key: `${maps.googleAPIKey}`,
+//           dataType: "json",
+//           method: "GET",
+//           departure_time: "now",
+//           mode: "walking",
+//           origins: `${(item[1], item[2])}`
+//         },
+//         proxyHeaders: {},
+//         useCache: false
+//       }
+//     });
+//   });
+// };
+
+// maps.getWalkingDistance = () => {
+//   const GmapsPromises = maps.createWalkingReqs();
+//   $.when(...GmapsPromises).then((...res) => {
+//     maps.walkingLocations = res.map((location) => {
+//     });
+//   });
+// };
 
 // Display Google Map on screen, run a forEach method against each location in the Locations array
 maps.displayMap = () => {
@@ -270,14 +303,16 @@ maps.displayMap = () => {
     position: { lat: 43.6482644, lng: -79.4000474 },
     map: map,
     animation: google.maps.Animation.BOUNCE,
-    content: hyContent
+    content: hyContent,
+    title: "HackerYou"
   });
 
   maps.setMarkers(map);
+  // console.log(map);
 };
 
 //Create markers on Google Maps based on the Locations
-maps.setMarkers = map => {
+maps.setMarkers = (map) => {
   for (index = 0; index < maps.locations.length; index++) {
     let location = maps.locations[index];
     let position = new google.maps.LatLng(location[1], location[2]);
@@ -294,7 +329,7 @@ maps.setMarkers = map => {
   maps.drawRadiusMarker(map);
 };
 
-maps.drawRadiusMarker = map => {
+maps.drawRadiusMarker = (map) => {
   let hyCircle = new google.maps.Circle({
     strokeColor: "#D11F26",
     strokeOpacity: 0.5,
@@ -309,7 +344,7 @@ maps.drawRadiusMarker = map => {
 
 maps.eventListener = (map, marker, index) => {
   let mapContent = maps.locations[index];
-  maps.locations.forEach(item => {
+  maps.locations.forEach((item) => {
     const contentCard = `<div class="pin-container">
               <h2>${
                 mapContent[0]
@@ -330,7 +365,6 @@ maps.eventListener = (map, marker, index) => {
       content: contentCard,
       closeWhenOthersOpen: true,
       callbacks: {
-        beforeOpen: function() {},
         open: function() {
           $(".fa-heart").on("click", function() {
             $(this).toggleClass("fas far");
